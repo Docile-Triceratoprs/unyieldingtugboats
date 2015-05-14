@@ -16,8 +16,8 @@ module.exports = function (app) {
   app.post('/new', multer({  dest: './uploads/',
                     //give file a short id for filename which will be also be used in _id field in database
                     rename: function (fieldname, filename, req, res) {
-                      	console.log("Got to multer.");
-			return photoUtils.generateShortId() + ".jpg";
+                      console.log("Got to multer.");
+			                 return photoUtils.generateShortId() + ".jpg";
                     },
                     //as soon as the upload is complete, need to extract the exif data and store in the database
                   	//the extracted exif data has gps info in DMS and the google maps API needs gps info 
@@ -25,23 +25,10 @@ module.exports = function (app) {
                   	//helper functions, and the resulting gps object with lat and lng properties in decimal degrees is
                   	//passed to the addPhotoToDb helper function.
                     onFileUploadComplete: function (file, req, res) {
-                	console.log(JSON.stringify(file)); 
-		    	 new ExifImage({ image : './uploads/' + file.name }, function (error, exifData) {
-                          if (error)
-                              console.log('Error: '+error.message);
-                          else {
-                            var gpsDMS = {
-                              GPSLatitudeRef: exifData.gps.GPSLatitudeRef,
-                              GPSLatitude: exifData.gps.GPSLatitude,
-                              GPSLongitudeRef: exifData.gps.GPSLongitudeRef,
-                              GPSLongitude: exifData.gps.GPSLongitude
-                            }
-
-                            var gps = photoUtils.makeDecDeg(gpsDMS);
-                            var orientation = exifData.image.Orientation;
-                            photoUtils.addPhotoToDb(file.name, gps, orientation, req.body)//add to database
-                          }
-                      });
+                      var gps =[Number(req.body.lon), Number(req.body.lat)];
+                      console.log(gps);
+                      var orientation = 6;
+                      photoUtils.addPhotoToDb(file.name, gps, orientation, req.body)//add to database
                     }
                   }), photoUtils.fns);
 

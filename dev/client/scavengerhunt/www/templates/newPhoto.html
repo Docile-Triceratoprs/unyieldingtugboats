@@ -12,7 +12,7 @@
   </ion-header-bar>
   
   <ion-content>
-    <img class="photo" ng-src="{{lastPhoto}}">
+    <img class="photo" ng-src="{{fileUri}}">
     <div class="list">
       <label class="item item-input">
         <input ng-model="tags" type="text" placeholder="tags, separated by commas">
@@ -20,8 +20,8 @@
       <label class="item item-input">
         <input ng-model="info" type="text" placeholder="comments">
       </label>
+    <a ui-sref="pics" ng-click="sendPictureWithLocation(fileUri, tags, info)" class="button button-block">Save</a>
+    <a ui-sref="home" class="button button-block">Cancel</a>
     </div>
-    <button ng-click="uploadPhoto(tags, info)" class="button button-block">Save</button>
-    <button class="button button-block">Cancel</button>
   </ion-content>
 </ion-view>

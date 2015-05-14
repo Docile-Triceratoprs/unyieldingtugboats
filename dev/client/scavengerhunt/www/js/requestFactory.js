@@ -18,7 +18,7 @@ angular.module('requestFactory', [])
           callback(response);
         })
         .error(function(err) {
-          console.log('Error: Unable to get data from server');
+          console.log('Error: Unable to get data from server', err);
         });
       }
     }

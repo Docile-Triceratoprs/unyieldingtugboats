@@ -50,7 +50,7 @@ module.exports = {
 			info: info
 		}, function(error, photo) {
 			if (error) {
-				console.log ('error');
+				console.log ('error' + error);
 			}
 		});
 	},
