@@ -40,7 +40,7 @@ module.exports = {
 
 	//creates a document in the db that represents the photo
 	addPhotoToDb : function(filename, gps, orientation, reqBody){
-		var tags = reqBody.tags.split(',');
+		var tags = reqBody.tags ? reqBody.tags.split(',') : "";
 		var info = reqBody.info;
 		Photo.create({
 			_id: filename.substring(0, filename.indexOf('.')),
