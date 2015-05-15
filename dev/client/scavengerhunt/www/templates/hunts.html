@@ -14,7 +14,10 @@
     <label class="item item-input">
       <input type="text" ng-model="zipcode"placeholder="ex. 94102"></input>
     </label>
-    <button ng-click="filterByZip(zipcode)" class="button button-royal button-block">Submit</button>
+    <label class="item item-input">
+      <input type="text" ng-model="radius"placeholder="distance in miles"></input>
+    </label>
+    <button ng-click="filterByZip(zipcode, radius)" class="button button-royal button-block">Submit</button>
     <ion-list ng-repeat="hunt in hunts">
       <ion-item>
         <img class="photo" rotate orientation='{{hunt.cover.orientation}}' src="{{hunt.cover.src}}">

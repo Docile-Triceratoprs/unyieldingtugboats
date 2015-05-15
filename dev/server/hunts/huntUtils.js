@@ -1,4 +1,5 @@
 var Hunts = require('./huntModel');
+var rp = require('request-promise');
 
 module.exports = {
 
@@ -11,20 +12,27 @@ module.exports = {
   // curl -i http://localhost:3000/api/hunts?zip=94536
   getHunts: function(req, res, next) {
     var queryObj = {};
-    if (req.query.zip) {
-      queryObj = {region: req.query.zip};
-      //retrieve hunts in specified zipcode
-      Hunts.find(queryObj)
-           .limit(10)
-           .exec(function(err, results) { 
-              if (err) {
-                console.log('Error fetching from Hunts DB');
-                next(err);
-              } else {
-                res.queryResults = JSON.stringify(results);
-                next();
-              }
-            });
+    if (req.query.address) {
+      var address = getCords(req.query.address);
+      var radius = parseInt(req.query.radius);
+      //retrieve hunts in specified address
+
+      rp('http://maps.googleapis.com/maps/api/geocode/json?address=' + address)
+        .then(function(body){
+          var result = JSON.parse(body);
+          lat = result.results[0].geometry.location.lat;
+          lng = result.results[0].geometry.location.lng;
+          console.log('google answered ',lat,' - ',lng);
+          var cords = [lng, lat];
+          var loc = {
+                         "lat" : lat,
+                         "lng" : lng
+                        };
+          
+          getHuntsByLoc(cords, radius, req, res, next);
+        });
+
+      
     } else {
       //retrieve most recently added hunts
       Hunts.find({})
@@ -43,19 +51,59 @@ module.exports = {
 
   },
 
+  getHuntsByLoc : function(cords, radius, req, res, next) {
+    Hunts.find({loc: {
+
+                $nearSphere: {
+                  $geometry: {
+                    type : "Point",
+                    coordinates : cords,
+                  },
+                  $maxDistance: radius
+                }
+
+      }})
+           .limit(10)
+           .exec(function(err, results) { 
+              if (err) {
+                console.log('Error fetching from Hunts DB');
+                next(err);
+              } else {
+                res.queryResults = JSON.stringify(results);
+                next();
+              }
+            });
+  },
+
   // Add a new hunt to the database
   // curl -H "Content-Type: application/json" -X POST -d '{"info" : "infos about hunt", "region" : 94536, "tags" : [ "tag", "another tag" ], "photos" : [ "photo1_id", "photo2_id" ]}' http://localhost:3000/api/hunts/new
   addHunt: function(req, res, next) {
     console.log(req.body);
-     Hunts.create(req.body, function(err) {
-       if (err) {
-         console.log('Error creating new hunt');
-         next(err);
-       } else {
-         console.log('hunt was added');
-         next();
-       }
-    });
+    var address = req.body.address;
+    rp('http://maps.googleapis.com/maps/api/geocode/json?address=' + address)
+        .then(function(body){
+          var result = JSON.parse(body);
+          lat = result.results[0].geometry.location.lat;
+          lng = result.results[0].geometry.location.lng;
+          console.log('google answered ',lat,' - ',lng);
+          var cords = [lng, lat];
+          req.body.loc = {};
+          req.body.type = cords;
+          
+          Hunts.create(req.body, function(err) {
+            if (err) {
+            console.log('Error creating new hunt');
+            next(err);
+          } else {
+            console.log('hunt was added');
+           next();
+         }
+       });
+
+
+        });
+
+     
   },
   
   updateReview: function(req,res,next) {

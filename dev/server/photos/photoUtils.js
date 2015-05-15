@@ -3,7 +3,6 @@
 
 var shortid = require('shortid');
 var Photo = require('./photoModel');
-var Zipcode = require('./zipcodeModel');
 var rp = require('request-promise');
 var multer = require('multer');
 var ExifImage = require('exif').ExifImage;
@@ -76,10 +75,6 @@ module.exports = {
 			                   "lat" : lat,
 			             			 "lng" : lng
 					              };
-					Zipcode.create({
-						zipcode: zip,
-						loc: zipLoc
-					});
 				  fetchPhotosByLoc(zipLoc, radius, req, res, next);
 				});
 			
