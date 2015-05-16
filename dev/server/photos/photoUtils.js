@@ -39,14 +39,16 @@ module.exports = {
 
 	//creates a document in the db that represents the photo
 	addPhotoToDb : function(filename, gps, orientation, reqBody){
-		var tags = reqBody.tags ? reqBody.tags.split(',') : "";
-		var info = reqBody.info;
+		var tags = reqBody.tags ? reqBody.tags.split(',') : "",
+			info = reqBody.info,
+		 	user = reqBody.user;
 		Photo.create({
 			_id: filename.substring(0, filename.indexOf('.')),
 			loc: gps,
 			orientation: orientation,
 			tags: tags,
-			info: info
+			info: info,
+			user: user
 		}, function(error, photo) {
 			if (error) {
 				console.log ('error' + error);
@@ -121,6 +123,16 @@ module.exports = {
 	//sends a response with JSON representation of the 30 most recently added photos
 	fetchPhotosByDate: function(req, res, next) {
 		var limit = 30; 
+		console.log(req.params);
+		if(req.params.user){
+			Photo.find({user: req.params.user}).limit(limit).sort({date: -1}).exec(function(err, photos) {
+			if (err) {
+				return res.status(500).json(err);
+			}
+			console.log(photos);
+			res.status(200).json(photos);
+		});
+		}
 		Photo.find({}).limit(limit).sort({date: -1}).exec(function(err, photos) {
 			if (err) {
 				return res.status(500).json(err);

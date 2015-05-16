@@ -8,6 +8,24 @@ angular.module('scavengerhunt.photofact', [])
   var photos = []; 
   return {
   // retrieve most recently added photos from the server
+
+    getPhotosByUser: function (user) {
+      $http({
+        method:'GET', 
+        url: 'http://johnpizzo.me:3000/api/photos?user="' + user + '"'
+      })
+      .then(function(response){
+        photos = response.data.slice(); 
+        //for each photo in the photos, add  src, lon, and lat properties 
+        photos.forEach(function(photo) {
+          photo.src = 'http://johnpizzo.me:3000/api/photos/' + photo._id,
+          photo.lon = photo.loc[0],
+          photo.lat = photo.loc[1]
+        })
+        callback(photos);
+      })
+    },
+
     getPhotos: function(callback) {
       $http({
         method:'GET', 

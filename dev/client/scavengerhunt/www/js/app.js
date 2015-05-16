@@ -16,6 +16,7 @@ angular.module('scavengerhunt', ['ionic',
                'scavengerhunt.newPhoto',
                'scavengerhunt.newhunts',
                'scavengerhunt.login',
+               'scavengerhunt.profile',
                'uiGmapgoogle-maps'])
 .config(function($stateProvider, $urlRouterProvider) {
   
