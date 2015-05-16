@@ -5,12 +5,7 @@ angular.module('scavengerhunt.login', [])
   $scope.loginData = {};
   var userInfo = $scope.loginData;
 
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
+  
 
   // Triggered when it's a new users creating a profile.
   $scope.newUserLogin = function() {
@@ -52,9 +47,9 @@ angular.module('scavengerhunt.login', [])
   };
 
   // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $state.go('home');
-  };
+  $scope.closeLogin = function(){
+    $state.go('app.home');
+  }
 
 });
 

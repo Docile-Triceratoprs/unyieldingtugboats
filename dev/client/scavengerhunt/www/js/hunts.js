@@ -27,6 +27,10 @@ angular.module('scavengerhunt.hunts', ['uiGmapgoogle-maps', 'ionic.rating'])
       });
   };
 
+
+
+
+
   // modal for individual views
   $ionicModal.fromTemplateUrl('templates/huntInfo.html', {
     scope: $scope,
