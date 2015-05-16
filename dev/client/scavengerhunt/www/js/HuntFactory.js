@@ -7,10 +7,10 @@ angular.module('scavengerhunt.huntfactory', [])
   return {
 
     //get hunts from the database by making a request to api/hunts
-    getHunts: function(zip, callback) {
+    getHunts: function(zip, radius, callback) {
       var zipCode = '';
       if (zip) {
-        zipCode = '?zip='+zip;
+        zipCode = '?zip='+zip+'&radius='+radius;
       }
 
       //uses request Factory to send request to back end

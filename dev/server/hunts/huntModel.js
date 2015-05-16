@@ -14,7 +14,13 @@ var HuntSchema = new mongoose.Schema({
     comments: [],
     totalReviews : Number,
     accumulatedScore : Number,
-    averageScore : Number
+    averageScore : Number,
+	loc: {
+		//[lng, lat]
+		type: [Number],  
+		//create the geospatial index
+		index: '2dsphere' 
+	}
 });
 
 module.exports = mongoose.model('Hunt', HuntSchema);

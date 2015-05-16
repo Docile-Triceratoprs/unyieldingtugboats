@@ -19,15 +19,12 @@ angular.module('scavengerhunt.hunts', ['uiGmapgoogle-maps', 'ionic.rating'])
   resetReviewInfo();
 
   // Get all hunts from certain zip code
-  $scope.filterByZip = function(zip) {
-    if (String(zip).match(/^[0-9]{5}$/)) {
-      HuntFact.getHunts(Number(zip), function(hunts) {
+  $scope.filterByZip = function(zip, radius) {
+    
+      HuntFact.getHunts(zip,radius, function(hunts) {
         $scope.hunts = hunts;
         console.log("scope.hunts: ", $scope.hunts);
       });
-    } else {
-      console.log('please enter valid zip code');
-    }
   };
 
   // modal for individual views

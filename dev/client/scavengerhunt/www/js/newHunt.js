@@ -36,7 +36,7 @@ angular.module('scavengerhunt.newhunts', [])
   $scope.addHunt = function(info) {
     var newHunt = {};
 
-    newHunt.region = NewHuntFact.newHunt.zipcode;
+    newHunt.address = NewHuntFact.newHunt.zipcode;
     newHunt.cover = NewHuntFact.newHunt.cover;
     newHunt.photos = []; 
     NewHuntFact.newHunt.photos.forEach(function(photo) {
