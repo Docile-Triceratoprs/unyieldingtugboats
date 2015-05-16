@@ -9,7 +9,7 @@ angular.module('scavengerhunt.photofact', [])
   return {
   // retrieve most recently added photos from the server
 
-    getPhotosByUser: function (user) {
+    getPhotosByUser: function (user, callback) {
       $http({
         method:'GET', 
         url: 'http://johnpizzo.me:3000/api/photos?user="' + user + '"'

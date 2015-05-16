@@ -8,7 +8,7 @@ angular.module('scavengerhunt.photos', [])
   // get photos from factory
   PhotoFact.getPhotos(function(photos) {
     $scope.photos = photos; 
-  })
+  });
 
 
   // create modal for single photo view  
