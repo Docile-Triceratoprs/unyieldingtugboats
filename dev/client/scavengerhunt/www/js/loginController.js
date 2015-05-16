@@ -1,6 +1,6 @@
 angular.module('scavengerhunt.login', [])
 
-.controller('LoginCtrl', function($state, $scope, $ionicModal, $timeout, request) {
+.controller('LoginCtrl', function($rootScope, $state, $scope, $ionicModal, $timeout, request) {
   // Form data for the login modal
   $scope.loginData = {};
   var userInfo = $scope.loginData;
@@ -25,7 +25,8 @@ angular.module('scavengerhunt.login', [])
   // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
     console.log("accessed doLogin function");
-    request.request('http://localhost:3000/api/users/loginUser', userInfo, function(response) {
+    $rootScope.user = userInfo.username;
+    request.request('http://johnpizzo.me:3000/api/users/loginUser', userInfo, function(response) {
       console.log('Welcome back User: ', response[0].username);
       if(response[0].username === userInfo.username) {
         $scope.closeLogin();

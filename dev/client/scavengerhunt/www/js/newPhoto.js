@@ -1,5 +1,5 @@
 angular.module('scavengerhunt.newPhoto', [])
-.controller('NewPhotoCtrl', function ($cordovaFileTransfer, $scope) {
+.controller('NewPhotoCtrl', function ($rootScope, $cordovaFileTransfer, $scope) {
   console.log('Camera Controller');
   console.log(navigator.camera);
   var options = {
@@ -7,11 +7,11 @@ angular.module('scavengerhunt.newPhoto', [])
     encodingType: navigator.camera.EncodingType.JPEG,
     destinationType: navigator.camera.DestinationType.FILE_URI
   };
-  $scope.init = function () {
     console.log("INIT");
+  $scope.init = function () {
   }
-  var fail = function () {
-    console.log('fail');
+  var fail = function (err) {
+    console.log('fail:', err);
   };
   var pass = function (data) {
     console.log("Image taken.");
@@ -27,6 +27,7 @@ angular.module('scavengerhunt.newPhoto', [])
     console.log(tags, ":TAGS");
     console.log(info, ":info");
     console.log(data, ":DATA");
+      var user = $rootScope.user;
       navigator.geolocation.getCurrentPosition(function (position) {
         console.log(JSON.stringify(position.coords));
         var options = new FileUploadOptions();
@@ -35,15 +36,16 @@ angular.module('scavengerhunt.newPhoto', [])
           lon: position.coords.longitude,
           lat: position.coords.latitude,
           tags: tags,
-          info: info
+          info: info,
+          user: user
         };
 
-        $cordovaFileTransfer.upload("http://localhost:3000/api/photos/new", data, options, true)
+        $cordovaFileTransfer.upload("http://johnpizzo.me:3000/api/photos/new", data, options, true)
           .then(function (response) {
             console.log("Uploaded:", response);
           });  
       });
     };
-
+console.log("PICTURE");
   navigator.camera.getPicture(pass, fail, options);
 });

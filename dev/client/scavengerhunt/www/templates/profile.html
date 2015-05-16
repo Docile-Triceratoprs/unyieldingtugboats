@@ -1,14 +1,23 @@
-
 <ion-view>
 
-<ion-content>
-  <h1>Hello {{ user.username }}!</h1>
-  <button ng-click="" class="button button-royal button-block">Pictures!</button>
+<ion-header-bar class="bar-royal">
+    <div class="button-bar">
+	    <a ui-sref="profile" class="button button-icon ion-person"></a>
+	    <a ui-sref="pics" class="button button-icon ion-image"></a>
+	    <a ui-sref="home" class="button button-icon ion-home"></a>
+	    <a ui-sref="newhunt" class="button button-icon ion-plus"></a>
+    </div>
+</ion-header-bar>
+
+<ion-content ng-init="init();">
+  <h1>Hello {{ user }}!</h1>
+  <!-- <button ng-click="" class="button button-royal button-block">Pictures!</button> -->
+  <h2>Pictures</h2>
+  <ion-list ng-repeat="photo in photos">
+      <ion-item><img class='photo' src="{{photos.src}}"/></ion-item>
+  </ion-list>
   <button ng-click="" class="button button-royal button-block">Hunts!</button>
   <br>
-  <ion-list ng-repeat=''>
-      <ion-item><img class=''</ion-item>
-    </ion-list>
 </ion-content>
 
 </ion-view>

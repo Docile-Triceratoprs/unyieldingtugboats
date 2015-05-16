@@ -39,14 +39,16 @@ module.exports = {
 
 	//creates a document in the db that represents the photo
 	addPhotoToDb : function(filename, gps, orientation, reqBody){
-		var tags = reqBody.tags ? reqBody.tags.split(',') : "";
-		var info = reqBody.info;
+		var tags = reqBody.tags ? reqBody.tags.split(',') : "",
+			info = reqBody.info,
+		 	user = reqBody.user;
 		Photo.create({
 			_id: filename.substring(0, filename.indexOf('.')),
 			loc: gps,
 			orientation: orientation,
 			tags: tags,
-			info: info
+			info: info,
+			user: user
 		}, function(error, photo) {
 			if (error) {
 				console.log ('error' + error);

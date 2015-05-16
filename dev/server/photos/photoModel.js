@@ -18,7 +18,8 @@ var PhotoSchema = new mongoose.Schema({
 	orientation: Number,
 	tags: Array,
 	info: String, 
-	date: { type: Date, default: Date.now }
+	date: { type: Date, default: Date.now },
+	user: String
 
 });
 
