@@ -123,16 +123,6 @@ module.exports = {
 	//sends a response with JSON representation of the 30 most recently added photos
 	fetchPhotosByDate: function(req, res, next) {
 		var limit = 30; 
-		console.log(req.params);
-		if(req.params.user){
-			Photo.find({user: req.params.user}).limit(limit).sort({date: -1}).exec(function(err, photos) {
-			if (err) {
-				return res.status(500).json(err);
-			}
-			console.log(photos);
-			res.status(200).json(photos);
-		});
-		}
 		Photo.find({}).limit(limit).sort({date: -1}).exec(function(err, photos) {
 			if (err) {
 				return res.status(500).json(err);

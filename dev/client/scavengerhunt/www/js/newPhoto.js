@@ -7,8 +7,8 @@ angular.module('scavengerhunt.newPhoto', [])
     encodingType: navigator.camera.EncodingType.JPEG,
     destinationType: navigator.camera.DestinationType.FILE_URI
   };
-  $scope.init = function () {
     console.log("INIT");
+  $scope.init = function () {
   }
   var fail = function (err) {
     console.log('fail:', err);
@@ -40,7 +40,7 @@ angular.module('scavengerhunt.newPhoto', [])
           user: user
         };
 
-        $cordovaFileTransfer.upload("http://localhost:3000/api/photos/new", data, options, true)
+        $cordovaFileTransfer.upload("http://johnpizzo.me:3000/api/photos/new", data, options, true)
           .then(function (response) {
             console.log("Uploaded:", response);
           });  

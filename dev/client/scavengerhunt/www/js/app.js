@@ -45,6 +45,7 @@ angular.module('scavengerhunt', ['ionic',
   // photos view
   .state('app.pics', {
     url: '/pics',
+    cache: false,
     templateUrl: 'templates/pics.html',
     controller: 'PhotosCtrl'
   })
@@ -75,6 +76,7 @@ angular.module('scavengerhunt', ['ionic',
   // add new photo 
   .state('app.newphoto', {
     url: '/newphoto',
+    cache: false,
     templateUrl: 'templates/newPhoto.html',
     controller: 'NewPhotoCtrl'
   });
