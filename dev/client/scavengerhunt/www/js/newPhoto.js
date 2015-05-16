@@ -38,7 +38,7 @@ angular.module('scavengerhunt.newPhoto', [])
           info: info
         };
 
-        $cordovaFileTransfer.upload("http://johnpizzo.me:3000/api/photos/new", data, options, true)
+        $cordovaFileTransfer.upload("http://localhost:3000/api/photos/new", data, options, true)
           .then(function (response) {
             console.log("Uploaded:", response);
           });  

@@ -25,55 +25,55 @@ angular.module('scavengerhunt', ['ionic',
   $stateProvider
   .state('login', {
     url: '/login',
-    // cache: false,
-    // reload: true,
     templateUrl: 'templates/login.html',
     controller: 'LoginCtrl'
   })
-  .state('home', {
-    url: 'home',
-    // cache: false,
-    // reload: true,
+  .state('app', {
+    url: '/app', 
+    templateUrl: 'templates/renderer.html'
+  })
+  .state('app.home', {
+    url: '/home',
     templateUrl: 'templates/hunts.html',
     controller: 'HuntsCtrl'
   })
-  .state('profile', {
-    url: 'profile',
+  .state('app.profile', {
+    url: '/profile',
     templateUrl: 'templates/profile.html'
   })
   // photos view
-  .state('pics', {
-    url: 'pics',
+  .state('app.pics', {
+    url: '/pics',
     templateUrl: 'templates/pics.html',
     controller: 'PhotosCtrl'
   })
 
   // the first form for creating a new hunt
-  .state('newhunt', {
-    url: 'newhunt',
+  .state('app.newhunt', {
+    url: '/newhunt',
     templateUrl: 'templates/newhuntsmodal.html',
     controller: 'NewHuntCtrl'
   })
 
   // the photo selection view
-  .state('newhuntphotos', {
-    url: 'newhunt/photoSelect',
+  .state('app.newhuntphotos', {
+    url: '/newhunt/photoSelect',
     cache: false,
     templateUrl: 'templates/newHuntPhotoSelect.html',
     controller: 'NewHuntCtrl'
   })
 
   // review and save hunt. shows photo map.
-  .state('newhuntreview', {
-    url: 'newhunt/review',
+  .state('app.newhuntreview', {
+    url: '/newhunt/review',
     cache: false,
     templateUrl: 'templates/newHuntReview.html',
     controller: 'NewHuntCtrl'
   })
 
   // add new photo 
-  .state('newphoto', {
-    url: 'newphoto',
+  .state('app.newphoto', {
+    url: '/newphoto',
     templateUrl: 'templates/newPhoto.html',
     controller: 'NewPhotoCtrl'
   });
@@ -92,46 +92,4 @@ angular.module('scavengerhunt', ['ionic',
     libraries: 'weather,geometry,visualization'
   });
 })
-.controller('AppCtrl', function($ionicModal, $ionicSideMenuDelegate, $scope, NewHuntFact, $cordovaFile, PhotoFact) {
-  // Main Application Controller.
-  // Toggles the side menu (top-right button, used for adding new hunts/photos)
-  $scope.toggleMenuRight = function() {
-    $ionicSideMenuDelegate.toggleRight();
-  }
 
-  // camera
-  $scope.getPhoto = function() {
-    
-  };
-
-
-  $scope.uploadPhoto = function(tags, info) {
-    var params = {};
-    params.tags = tags;
-    params.info = info;
-    var imageURI = $scope.lastPhoto;
-
-    var options = new FileUploadOptions();
-    options.fileKey = 'file';
-    options.fileName = imageURI.substr(imageURI.lastIndexOf('/')+1);
-    options.mimeType = 'image/jpeg';
-    options.chunkedMode = false;
-    options.params = params;
-
-    PhotoFact.newPhoto(imageURI, options);
-
-  };
-
-})
-.run(function($ionicPlatform) {
-  // $ionicPlatform.ready(function() {
-  //   // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-  //   // for form inputs)
-  //   if(window.cordova && window.cordova.plugins.Keyboard) {
-  //     cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-  //   }
-  //   if(window.StatusBar) {
-  //     StatusBar.styleDefault();
-  //   }
-  // });
-});

@@ -5,19 +5,14 @@ angular.module('scavengerhunt.login', [])
   $scope.loginData = {};
   var userInfo = $scope.loginData;
 
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
+  
 
   // Triggered when it's a new users creating a profile.
   $scope.newUserLogin = function() {
 
     console.log("New user data: ", $scope.loginData);
 
-    request.request('http://johnpizzo.me:3000/api/users/newUser', userInfo, function(response) {
+    request.request('http://localhost:3000/api/users/newUser', userInfo, function(response) {
       console.log('made a new user! ', response);
       if(response === 'userCode'){
         $scope.closeLogin(); 
@@ -30,7 +25,7 @@ angular.module('scavengerhunt.login', [])
   // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
     console.log("accessed doLogin function");
-    request.request('http://johnpizzo.me:3000/api/users/newUserapi/users/loginUser', userInfo, function(response) {
+    request.request('http://localhost:3000/api/users/loginUser', userInfo, function(response) {
       console.log('Welcome back User: ', response[0].username);
       if(response[0].username === userInfo.username) {
         $scope.closeLogin();
@@ -52,9 +47,9 @@ angular.module('scavengerhunt.login', [])
   };
 
   // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $state.go('home');
-  };
+  $scope.closeLogin = function(){
+    $state.go('app.home');
+  }
 
 });
 
